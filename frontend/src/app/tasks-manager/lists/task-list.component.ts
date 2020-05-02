@@ -22,7 +22,7 @@ export class TaskListComponent implements OnInit {
 
   getAllTasks() {
     this.userId = JSON.parse(localStorage.getItem('currentUser'))._id;
-    this.taskService.getTasks(this.userId).subscribe(h => this.getDates(h));
+    this.taskService.getTasks(this.userId, null).subscribe(h => this.getDates(h));
     
   }
 
@@ -51,10 +51,12 @@ export class TaskListComponent implements OnInit {
   }
 
   sortByName(){
-    this.taskService.getSortedByNameTasks(this.userId).subscribe(h => this.getDates(h));
+    this.userId = JSON.parse(localStorage.getItem('currentUser'))._id;
+    this.taskService.getTasks(this.userId, "name").subscribe(h => this.getDates(h));
   }
 
   sortByDeadline(){
-    this.taskService.getSortedByDeadlineTasks(this.userId).subscribe(h => this.getDates(h));
+    this.userId = JSON.parse(localStorage.getItem('currentUser'))._id;
+    this.taskService.getTasks(this.userId, "deadline").subscribe(h => this.getDates(h));
   }
 }

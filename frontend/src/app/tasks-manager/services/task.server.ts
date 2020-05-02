@@ -17,19 +17,12 @@ export class TaskService {
 
   constructor(private http: HttpClient) { }
 
-  getTasks(userId: Object): Observable<Array<Task>> {
-    return this.http.get<Array<Task>>(`${this.url}${userId}/tasks/`);
-  }
-
-  getSortedByDeadlineTasks(userId: Object): Observable<Array<Task>> {
-    return this.http.get<Array<Task>>(`${this.url}${userId}/tasks/sortByDeadline/`);
-  }
-
-  getSortedByNameTasks(userId: Object): Observable<Array<Task>> {
-    return this.http.get<Array<Task>>(`${this.url}${userId}/tasks/sortByName/`);
+  getTasks(userId: Object, sortBy: String): Observable<Array<Task>> {
+    return this.http.get<Array<Task>>(`${this.url}${userId}/tasks/?sort-by=${sortBy}`);
   }
 
   getUnfinished(userId: Object): Observable<Array<Task>> {
+    console.log(this.http.get<Array<Task>>(`${this.url}${userId}/tasks/getUnfinished/`));
     return this.http.get<Array<Task>>(`${this.url}${userId}/tasks/getUnfinished/`);
   }
 

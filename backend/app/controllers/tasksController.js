@@ -2,32 +2,14 @@ var mongoose = require('mongoose'),
     Task = mongoose.model('tasks');
     mongoose.set('useFindAndModify', false);
 
-exports.getAllTasks = function(req, res){
+exports.getAllTasks = function(req, res){ 
     let user_uniq_id = req.params.userId;
+
+    const sortBy = req.query["sort-by"];
+    console.log(sortBy);
     
-    Task.find({user_id: new mongoose.Types.ObjectId(user_uniq_id)}, function(err, result){
-        if (err) 
-            res.status(500).send({'error':'An error has occurred'});
-        else
-            res.status(200).send(result);
-    });
-}
-
-exports.getSortedByDeadline = function(req, res){
-    let user_uniq_id = req.params.userId;
     Task.find({user_id: new mongoose.Types.ObjectId(user_uniq_id)})
-    .sort({deadline: 'asc'}).exec(function(err, result){
-        if (err) 
-            res.status(500).send({'error':'An error has occurred'});
-        else
-            res.status(200).send(result);
-    });
-}
-
-exports.getSortedByName = function(req, res){
-    let user_uniq_id = req.params.userId;
-    Task.find({user_id: new mongoose.Types.ObjectId(user_uniq_id)})
-    .sort({name: 'asc'}).exec(function(err, result){
+    .sort(sortBy).exec(function(err, result){
         if (err) 
             res.status(500).send({'error':'An error has occurred'});
         else
