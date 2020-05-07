@@ -3,10 +3,14 @@ var mongoose = require('mongoose'),
     mongoose.set('useFindAndModify', false);
 
 exports.getAllTasks = function(req, res){ 
-    let user_uniq_id = req.params.userId;
-
+    //let user_uniq_id = req.params.userId;
+    var token = req.headers.authorization.replace('Bearer ', '');
+    //console.log(token, JSON.parse(atob(token.split('.')[1])));
+    var decoded = jwtDecode(token);
+    console.log(decoded.userId);
     const sortBy = req.query["sort-by"];
     console.log(sortBy);
+    let user_uniq_id = decoded.userId;
     
     Task.find({user_id: new mongoose.Types.ObjectId(user_uniq_id)})
     .sort(sortBy).exec(function(err, result){
@@ -18,7 +22,10 @@ exports.getAllTasks = function(req, res){
 }
 
 exports.getUnfinished = function(req, res){
-    let user_uniq_id = req.params.userId;
+    //let user_uniq_id = req.params.userId;
+    var token = req.headers.authorization.replace('Bearer ', '');
+    var decoded = jwtDecode(token);
+    let user_uniq_id = decoded.userId;
     Task.find({user_id: new mongoose.Types.ObjectId(user_uniq_id), isMade: false})
     .exec(function(err, result){
         if (err) 
@@ -29,6 +36,7 @@ exports.getUnfinished = function(req, res){
 }
 
 exports.getTaskById = function(req, res){
+
     Task.findById(req.params.id, function(err, task) {
         if (err) {
             res.status(500).send({'error':'An error has occurred'});

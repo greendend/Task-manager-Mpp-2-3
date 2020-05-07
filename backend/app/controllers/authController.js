@@ -24,8 +24,15 @@ exports.login = (req, response) => {
             return;
         }
         user.token = generationToken(user);
+        let responseobj = {
+            name: user.userName,
+            _id: user._id,
+            token: user.token
+            }
 
-        response.status(200).send(user);
+        console.log(user);
+
+        response.status(200).send(responseobj); 
     })
 };
 
@@ -59,6 +66,7 @@ exports.registrate = function(req, res){
 
 let generationToken = (user) => {
     return jwt.sign({
-        userName: user.userName
+        userName: user.userName,
+        userId: user._id,
     }, auth.secretKey, {expiresIn: auth.expires});
 };

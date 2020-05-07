@@ -22,8 +22,9 @@ export class TaskListComponent implements OnInit {
 
   getAllTasks() {
     this.userId = JSON.parse(localStorage.getItem('currentUser'))._id;
+    console.log('this');
+    console.log(localStorage.getItem('currentUser'));
     this.taskService.getTasks(this.userId, null).subscribe(h => this.getDates(h));
-    
   }
 
   getDates(h){

@@ -22,7 +22,7 @@ export class TaskService {
   }
 
   getUnfinished(userId: Object): Observable<Array<Task>> {
-    console.log(this.http.get<Array<Task>>(`${this.url}${userId}/tasks/getUnfinished/`));
+    console.log("this.http.get<Array<Task>>(`${this.url}${userId}/tasks/getUnfinished/`)");
     return this.http.get<Array<Task>>(`${this.url}${userId}/tasks/getUnfinished/`);
   }
 

@@ -5,7 +5,9 @@ var express = require('express'),
   tasks = require('./app/models/task.model'), //created model loading here
   users = require('./app/models/user.model'), //created model loading here
   db = require('./app/config/db'),
-  bodyParser = require('body-parser');
+  bodyParser = require('body-parser'),
+  cookieParser = require('cookie-parser');
+  jwtDecode = require('jwt-decode');
   
   const cors           = require('cors');
   
@@ -16,6 +18,8 @@ mongoose.connect(db.url, { useUnifiedTopology: true,useNewUrlParser: true });
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.use(cookieParser());
 
 
 app.use(cors());
